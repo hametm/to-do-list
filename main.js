@@ -1,1 +1,1 @@
-console.log("Taters");
+(()=>{const t=(t,i,o)=>({title:t,dueDate:i,priority:o}),i=t("Wash dishes","10/22","High");t("Feed cat","10/22","Medium"),console.log(function(t,i){return t.todoList.push(i),t.todoList}({todoList:[],description:"This is my project"},i))})();
