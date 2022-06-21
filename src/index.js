@@ -30,18 +30,23 @@ const editProject = (() => {
     return { addToProject, removeFromProject };
 })();
 
-const newProject = project("This is my project");
-const dishes = todo("Wash dishes", "10/22", "High");
-const cat = todo("Feed cat", "10/22", "Medium");
-console.log(editProject.addToProject(newProject, cat));
-
-
 // DOM stuff
 
 const projectBtn = document.getElementById("projectBtn");
 
 
 const todoBtn = document.getElementById("todoBtn");
+const todoForm = document.getElementById("todoForm");
+const todoSubmitBtn = document.getElementById("todoSubmitBtn");
+const title = document.getElementById("title");
+const dueDate = document.getElementById("dueDate");
+const priority = document.querySelector('input[name="priority"]');
+
 todoBtn.onclick = () => {
-    
+    todoForm.classList.remove("hidden");
+}
+
+todoSubmitBtn.onclick = () => {
+    let newTodo = todo(title.value, dueDate.value, priority);
+    console.log(newTodo);
 }
