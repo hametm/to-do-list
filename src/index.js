@@ -33,7 +33,9 @@ const editProject = (() => {
 // DOM stuff
 
 const projectBtn = document.getElementById("projectBtn");
-
+const projectForm = document.getElementById("projectForm");
+const projectSubmitBtn = document.getElementById("projectSubmitBtn");
+const description = document.getElementById("description");
 
 const todoBtn = document.getElementById("todoBtn");
 const todoForm = document.getElementById("todoForm");
@@ -47,6 +49,15 @@ todoBtn.onclick = () => {
 }
 
 todoSubmitBtn.onclick = () => {
-    let newTodo = todo(title.value, dueDate.value, priority);
+    const newTodo = todo(title.value, dueDate.value, priority.checked); // Priority doesn't work
     console.log(newTodo);
+}
+
+projectBtn.onclick = () => {
+    projectForm.classList.remove("hidden");
+}
+
+projectSubmitBtn.onclick = () => {
+    const newProject = project(description.value);
+    console.log(newProject);
 }
