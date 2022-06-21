@@ -15,10 +15,15 @@
         <div id="projects">
             <h2>Your Projects</h2>
             <button id="projectBtn">New Project</button>
+            <form action="" id="projectForm" class="hidden">
+                <label for="description">Description</label>
+                <input type="text" id="description">
+                <input type="button" id="projectSubmitBtn" value="Submit">
+            </form>
         </div>
         <div id="addTodo">
             <button id="todoBtn">New To-Do</button>
-            <form class="hidden" id="todoForm">
+            <form action="" class="hidden" id="todoForm">
                 <label for="title">Title</label>
                 <input type="text" id="title">
                 <label for="dueDate">Due Date</label>
