@@ -18,14 +18,22 @@
         </div>
         <div id="addTodo">
             <button id="todoBtn">New To-Do</button>
-            <form class="hidden">
+            <form class="hidden" id="todoForm">
                 <label for="title">Title</label>
                 <input type="text" id="title">
                 <label for="dueDate">Due Date</label>
-                <input type="text" id="title">
-                <label for="priority">Priority</label>
-                <input type="text" id="title">
-            </div>
+                <input type="date" id="dueDate">
+                <fieldset>
+                    <legend>Priority</legend>
+                    <input type="radio" id="low" name="priority" checked>
+                    <label for="low">Low</label>
+                    <input type="radio" id="medium" name="priority">
+                    <label for="medium">Medium</label>
+                    <input type="radio" id="high" name="priority">
+                    <label for="high">High</label>
+                </fieldset>
+                <input type="button" id="todoSubmitBtn" value="Submit">
+            </form>
         </div>
     </main>
     <footer>
