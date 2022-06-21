@@ -1,0 +1,22 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: grid;
+    place-items: center;
+    grid-template-rows: 1fr 6fr;
+    min-height: 100vh;
+    background-image: linear-gradient(pink, aqua);
+    margin: 0;
+}
+
+main {
+    width: 80%;
+    height: 80%;
+    display: grid;
+    place-items: center;
+    background-color: whitesmoke;
+    margin-bottom: 40px;
+}
+
+.hidden {
+    
+}
