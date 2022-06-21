@@ -8,21 +8,19 @@ const project = (description) => {
 };
 
 const editProject = (() => {
-
+    const addToProject = (project, todo) => {
+        project.todoList.push(todo);
+        return project.todoList;
+    }
+    const removeFromProject = (project, todo) => {
+        const index = project.todoList.indexOf(todo);
+        project.todoList.splice(index, 1);
+        return project.todoList;
+    }
+    return { addToProject, removeFromProject };
 })();
-
-function addToProject(project, todo) {
-    project.todoList.push(todo);
-    return project.todoList;
-}
-
-function removeFromProject(project, todo) {
-    const index = project.todoList.indexOf(todo);
-    project.todoList.splice(index, 1);
-    return project.todoList;
-}
 
 const newProject = project("This is my project");
 const dishes = todo("Wash dishes", "10/22", "High");
 const cat = todo("Feed cat", "10/22", "Medium");
-console.log(addToProject(newProject, dishes));
+console.log(editProject.addToProject(newProject, cat));
