@@ -30,7 +30,12 @@ const render = (() => {
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
 
-     
+        if (project.isSelected === false) {
+            projectContainer.classList.remove("selectedContainer");
+        }
+        if (project.isSelected === true) {
+            projectContainer.classList.add("selectedContainer");
+        }
     
         projectContainer.classList.add("projectContainer");
         projectSelection.textContent = `${project.title}`;
@@ -67,7 +72,7 @@ const render = (() => {
                 const project = allProjects[i];
                 project.isSelected = false;
             }
-            
+
             const allContainers = document.querySelectorAll(".projectContainer");
             allContainers.forEach(div => {
                 div.classList.remove("selectedContainer");
@@ -124,9 +129,37 @@ const render = (() => {
         todoForm.classList.add("hidden");
         todoForm.reset();
 
+
         for (let i = 0; i < allProjects.length; i++) {
-            
+            const project = allProjects[i];
+            if (project.isSelected === true) {
+                for (let i = 0; i < allTodos.length; i++) {
+                    if ((allTodos[i]).project == project.title) {
+                        const todo = allTodos[i];
+                        const container = document.createElement("div");
+                        const title = document.createElement("p");
+                        const todoBtn = document.createElement("button");
+                        todoBtn.textContent = "Details";
+                        title.textContent = todo.title;
+                        container.append(title, todoBtn);
+                        todoList.appendChild(container);
+        
+                        todoBtn.onclick = () => {
+                            const todoDetails = document.createElement("div");
+                            const dueDate = document.createElement("p");
+                            const priority = document.createElement("p");
+                            dueDate.textContent = todo.dueDate;
+                            priority.textContent = todo.priority;
+                            todoDetails.append(dueDate, priority);
+                            container.appendChild(todoDetails);
+                        }
+        
+        
+                    }
+                }
+            }
         }
+
         
         // const projectContainer = document.querySelector(".selectedContainer");
         
