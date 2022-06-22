@@ -103,6 +103,8 @@ const render = (() => {
 
                 deleteBtn.onclick = () => {
                     editProject.removeFromProject(project, todo);
+                    const index = allTodos.indexOf(todo);
+                    allTodos.splice(index, 1);
                     container.remove();
                     console.log(project.todoList);
                 }
@@ -206,6 +208,7 @@ const render = (() => {
 
     todoBtn.onclick = () => {
         todoForm.classList.toggle("hidden");
+        hideElement(projectForm);
     }
     
     todoSubmitBtn.onclick = () => {
@@ -232,6 +235,7 @@ const render = (() => {
     
     projectBtn.onclick = () => {
         projectForm.classList.toggle("hidden");
+        hideElement(todoForm);
     }
 
     projectSubmitBtn.onclick = () => {
