@@ -129,7 +129,8 @@ const render = (() => {
         todoForm.classList.add("hidden");
         todoForm.reset();
 
-
+        // Create todo container
+        // Figure out weird stuff, like things getting added multiple times and classes not showing up
         for (let i = 0; i < allProjects.length; i++) {
             const project = allProjects[i];
             if (project.isSelected === true) {
@@ -137,6 +138,7 @@ const render = (() => {
                     if ((allTodos[i]).project == project.title) {
                         const todo = allTodos[i];
                         const container = document.createElement("div");
+                        container.classList.add("todoContainer");
                         const title = document.createElement("p");
                         const todoBtn = document.createElement("button");
                         todoBtn.textContent = "Details";
@@ -159,20 +161,6 @@ const render = (() => {
                 }
             }
         }
-
-        
-        // const projectContainer = document.querySelector(".selectedContainer");
-        
-
-        // if (newTodo.project === "Untitled") {
-        //     for (let i = 0; i < allTodos.length; i++) {
-        //         // if ((allTodos[i]).project == newTodo.project) {
-        //             let todo = document.createElement("p");
-        //             todo.textContent = (allTodos[i]).title;
-        //             todoList.appendChild(todo);
-        //         // }
-        //     }
-        // }
 
     }
     
