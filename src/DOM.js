@@ -196,7 +196,29 @@ const render = (() => {
     projectBtn.onclick = () => {
         projectForm.classList.remove("hidden");
     }
-    
+
+    function toggleDisabledButton() {
+        disableButton();
+        enableButton();
+    }
+
+    toggleDisabledButton();
+
+    function disableButton() {
+        if (projectTitle.value === "") {
+            projectSubmitBtn.disabled = true;
+        }
+    }
+
+    function enableButton() {
+        projectTitle.oninput = () => {
+            if (!(projectTitle.value === "")) {
+                projectSubmitBtn.disabled = false;
+            }
+        }
+    }
+
+  
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
         pushToProjects(newProject);
