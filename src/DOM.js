@@ -34,7 +34,6 @@ const render = (() => {
 
         newTodoContainer.append(newTodoTitle, newTodoDueDate);
         newTodoContainer.classList.add(`${newTodo.project}`); 
-        // console.log(newTodoContainer.className);
 
         todoForm.classList.add("hidden");
 
@@ -53,7 +52,7 @@ const render = (() => {
         const newProjectSelection = document.createElement("option");
 
         newProjectContainer.classList.add("projectContainer");
-        newProjectContainer.classList.add(`${newProject.title}`);
+        // newProjectContainer.classList.add(`${newProject.title}`);
         newProjectSelection.textContent = `${newProject.title}`;
 
         selectedProject.appendChild(newProjectSelection);
@@ -65,13 +64,22 @@ const render = (() => {
         projectList.append(newProjectContainer);
         projectForm.classList.add("hidden");
 
-        displayTasks(newProjectContainer);
+        displayTasks(newProjectContainer, newProject);
 
     }
 
-    function displayTasks(container) {
+    function displayTasks(container, project) {
         container.onclick = () => {
-            container.classList.toggle("selectedContainer");
+            console.log("project test: " + project.title);
+            const todos = document.querySelectorAll(`.${project.title}`);
+            const allContainers = document.querySelectorAll(".projectContainer");
+            allContainers.forEach(div => {
+                div.classList.remove("selectedContainer");
+            })
+            todos.forEach(div => {
+                todoList.appendChild(div);
+            });
+            container.classList.add("selectedContainer");
             // todoList.append(project.todoList);
         }
 
