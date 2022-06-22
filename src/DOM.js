@@ -1,4 +1,4 @@
-import { todo, project } from "./functions";
+import { todo, project, allTodos } from "./functions";
 
 const render = (() => {
     const projectBtn = document.getElementById("projectBtn");
@@ -17,8 +17,6 @@ const render = (() => {
     const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
 
-    let todoArray = [];
-
 
     // Default project
     const defaultProject = project("Untitled");
@@ -29,6 +27,12 @@ const render = (() => {
         const projectTitle = document.createElement("h3");
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
+
+        // This doesn't seem to work yet
+        if (project.title === "Untitled") {
+            projectContainer.classList.add("selectedContainer");
+            showTodo(project);
+        }
     
         projectContainer.classList.add("projectContainer");
 
@@ -68,17 +72,20 @@ const render = (() => {
                 div.classList.remove("selectedContainer");
             });
 
-            for (let i = 0; i < todoArray.length; i++) {
-                if ((todoArray[i]).project == project.title) {
-                    let todo = document.createElement("p");
-                    todo.textContent = (todoArray[i]).title;
-                    todoList.appendChild(todo);
-                }
-           
-            }
+            showTodo(project);
             container.classList.add("selectedContainer");
         }
 
+    }
+
+    function showTodo(project) {
+        for (let i = 0; i < allTodos.length; i++) {
+            if ((allTodos[i]).project == project.title) {
+                let todo = document.createElement("p");
+                todo.textContent = (allTodos[i]).title;
+                todoList.appendChild(todo);
+            }
+        }
     }
 
     todoBtn.onclick = () => {
@@ -88,15 +95,12 @@ const render = (() => {
     todoSubmitBtn.onclick = () => {
         const newTodo = todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
         displayTodo(newTodo);
-        todoArray.push(newTodo);
-
-        // const todos = document.getElementsByClassName(`todo${newTodo.project}`);
-        // console.log(todos);
-        // for (let item of todos) {
-        //     projectList.appendChild(item);
-        // }
-
+        allTodos.push(newTodo);
         todoForm.classList.add("hidden");
+
+        // if (newTodo.project === "Untitled") {
+
+        // }
 
     }
     

@@ -28,7 +28,10 @@ const editProject = (() => {
     return { addToProject, removeFromProject };
 })();
 
+const allTodos = [];
+
 export { 
     todo, 
-    project 
+    project,
+    allTodos 
 };
