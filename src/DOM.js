@@ -19,9 +19,54 @@ const render = (() => {
 
 
     // Default project
-    const defaultProject = project("Untitled", "", true);
-    allProjects.push(defaultProject);
-    displayProject(defaultProject);
+
+    function createDefaultProject() {
+        const defaultProject = project("Untitled", "", true);
+        pushToProjects(defaultProject);
+        displayProject(defaultProject);
+    }
+
+    function createProject() {
+        project(projectTitle.value, description.value);
+    }
+
+    function createTodo() {
+        todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
+    }
+
+    function pushToProjects(project) {
+        allProjects.push(project);
+    }
+
+    function pushToTodoList(todo) {
+        allTodos.push(todo);
+    }
+
+    function toggleSelectedContainer(project, container) {
+        if (project.isSelected === false) {
+            container.classList.remove("selectedContainer");
+        }
+        if (project.isSelected === true) {
+            container.classList.add("selectedContainer");
+        }
+        if (project.title === "Untitled") {
+            container.classList.add("defaultContainer");
+        }
+    }
+
+    function renderProjectContainer(project, container, title, description, selection) {
+        container.classList.add("projectContainer");
+        selection.textContent = `${project.title}`;
+        selectedProject.appendChild(selection);
+    
+        title.textContent = project.title;
+        description.textContent = project.description;
+
+        container.append(title, description);
+        projectList.append(container);
+    }
+
+    createDefaultProject();
 
 
     function displayProject(project) {
@@ -30,28 +75,14 @@ const render = (() => {
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
 
-        if (project.isSelected === false) {
-            projectContainer.classList.remove("selectedContainer");
-        }
-        if (project.isSelected === true) {
-            projectContainer.classList.add("selectedContainer");
-        }
-        if (project.title === "Untitled") {
-            projectContainer.classList.add("defaultContainer");
-        }
-    
-        projectContainer.classList.add("projectContainer");
-        projectSelection.textContent = `${project.title}`;
-        selectedProject.appendChild(projectSelection);
-    
-        projectTitle.textContent = project.title;
-        projectDescription.textContent = project.description;
-    
-        projectContainer.append(projectTitle, projectDescription);
-        projectList.append(projectContainer);
-
+        toggleSelectedContainer(project, projectContainer);
+        renderProjectContainer(project, projectContainer, projectTitle, projectDescription, projectSelection);
         updateTodoDiv(projectContainer, project);
     
+    }
+
+    function hideElement(element) {
+        element.classList.add("hidden");
     }
     
     function renderTodo(todo) {
@@ -68,28 +99,28 @@ const render = (() => {
 
     }
 
-    function updateTodoDiv(container, project) {
-        container.onclick = () => {
-            todoList.innerHTML = "";
-            for (let i = 0; i < allProjects.length; i++) {
-                const project = allProjects[i];
-                project.isSelected = false;
-            }
-
-            const allContainers = document.querySelectorAll(".projectContainer");
+    function deselectProject() {
+        todoList.innerHTML = "";
+        for (let i = 0; i < allProjects.length; i++) {
+            const project = allProjects[i];
+            project.isSelected = false;
+        }
+        const allContainers = document.querySelectorAll(".projectContainer");
             allContainers.forEach(div => {
                 div.classList.remove("selectedContainer");
             });
+    }
 
+    function selectProject(project) {
+        project.isSelected = true;
+    }
+
+    function updateTodoDiv(container, project) {
+        container.onclick = () => {
+            deselectProject();
             showTodo(project);
-            project.isSelected = true;
-            if (project.isSelected === false) {
-                container.classList.remove("selectedContainer");
-            }
-            if (project.isSelected === true) {
-                container.classList.add("selectedContainer");
-            }
-           
+            selectProject(project);
+            toggleSelectedContainer(project, container);
         }
 
     }
@@ -146,9 +177,8 @@ const render = (() => {
     
     todoSubmitBtn.onclick = () => {
         const newTodo = todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
-        renderTodo(newTodo);
-        allTodos.push(newTodo);
-        todoForm.classList.add("hidden");
+        pushToTodoList(newTodo);
+        hideElement(todoForm);
         todoForm.reset();
         todoList.innerHTML = "";
 
@@ -169,16 +199,13 @@ const render = (() => {
     
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
-        allProjects.push(newProject);
-        for (let i = 0; i < allProjects.length; i++) {
-            const project = allProjects[i];
-            project.isSelected = false;
-            }
+        pushToProjects(newProject);
+        deselectProject();
         const defaultContainer = document.querySelector(".defaultContainer");
         defaultContainer.classList.remove("selectedContainer");
         newProject.isSelected = true;
         displayProject(newProject);
-        projectForm.classList.add("hidden");
+        hideElement(projectForm);
         projectForm.reset();
 
     }
