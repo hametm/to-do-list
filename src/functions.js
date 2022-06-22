@@ -10,9 +10,9 @@ const todo = (title, dueDate, priority, project) => {
 
 // })();
 
-const project = (title, description) => {
+const project = (title, description, isSelected) => {
     let todoList = [];
-    return { title, description, todoList };
+    return { title, description, todoList, isSelected };
 };
 
 const editProject = (() => {
@@ -30,8 +30,11 @@ const editProject = (() => {
 
 const allTodos = [];
 
+const allProjects = [];
+
 export { 
     todo, 
     project,
-    allTodos 
+    allTodos,
+    allProjects
 };

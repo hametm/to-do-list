@@ -1,4 +1,4 @@
-import { todo, project, allTodos } from "./functions";
+import { todo, project, allTodos, allProjects } from "./functions";
 
 const render = (() => {
     const projectBtn = document.getElementById("projectBtn");
@@ -19,8 +19,10 @@ const render = (() => {
 
 
     // Default project
-    const defaultProject = project("Untitled");
+    const defaultProject = project("Untitled", "", true);
+    allProjects.push(defaultProject);
     displayProject(defaultProject);
+
 
     function displayProject(project) {
         const projectContainer = document.createElement("div");
@@ -28,14 +30,10 @@ const render = (() => {
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
 
-        if (project.title === "Untitled") {
-            projectContainer.classList.add("selectedContainer");
-        }
+     
     
         projectContainer.classList.add("projectContainer");
-
         projectSelection.textContent = `${project.title}`;
-    
         selectedProject.appendChild(projectSelection);
     
         projectTitle.textContent = project.title;
@@ -65,13 +63,25 @@ const render = (() => {
     function updateTodoDiv(container, project) {
         container.onclick = () => {
             todoList.innerHTML = "";
+            for (let i = 0; i < allProjects.length; i++) {
+                const project = allProjects[i];
+                project.isSelected = false;
+            }
+            
             const allContainers = document.querySelectorAll(".projectContainer");
             allContainers.forEach(div => {
                 div.classList.remove("selectedContainer");
             });
 
             showTodo(project);
-            container.classList.add("selectedContainer");
+            project.isSelected = true;
+            if (project.isSelected === false) {
+                container.classList.remove("selectedContainer");
+            }
+            if (project.isSelected === true) {
+                container.classList.add("selectedContainer");
+            }
+           
         }
 
     }
@@ -114,6 +124,13 @@ const render = (() => {
         todoForm.classList.add("hidden");
         todoForm.reset();
 
+        for (let i = 0; i < allProjects.length; i++) {
+            
+        }
+        
+        // const projectContainer = document.querySelector(".selectedContainer");
+        
+
         // if (newTodo.project === "Untitled") {
         //     for (let i = 0; i < allTodos.length; i++) {
         //         // if ((allTodos[i]).project == newTodo.project) {
@@ -132,6 +149,7 @@ const render = (() => {
     
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
+        allProjects.push(newProject);
         displayProject(newProject);
         projectForm.classList.add("hidden");
         projectForm.reset();
