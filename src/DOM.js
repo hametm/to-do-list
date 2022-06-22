@@ -17,7 +17,6 @@ const render = (() => {
     const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
 
-
     function createDefaultProject() {
         const defaultProject = project("Untitled", "", true);
         pushToProjects(defaultProject);
@@ -66,10 +65,15 @@ const render = (() => {
                 todoBtnContainer.classList.add("todoBtnContainer");
 
                 const todoDetails = document.createElement("div");
+                const dueDateLabel = document.createElement("p");
                 const dueDate = document.createElement("p");
+                const priorityLabel = document.createElement("p");
                 const priority = document.createElement("p");
+                dueDateLabel.textContent = "Due Date: ";
                 dueDate.textContent = todo.dueDate;
+                priorityLabel.textContent = "Priority: ";
                 priority.textContent = todo.priority;
+                todoDetails.classList.add("todoDetails");
                 hideElement(todoDetails);
 
 
@@ -93,8 +97,8 @@ const render = (() => {
 
                 detailsBtn.onclick = () => {
                     todoDetails.classList.toggle("hidden");
-                    todoDetails.append(dueDate, priority);
-                    container.appendChild(todoDetails);
+                    todoDetails.append(dueDateLabel, dueDate, priorityLabel, priority);
+                    container.after(todoDetails);
                 }
 
                 editBtn.onclick = () => {
@@ -106,6 +110,7 @@ const render = (() => {
                     const index = allTodos.indexOf(todo);
                     allTodos.splice(index, 1);
                     container.remove();
+                    todoDetails.remove();
                     console.log(project.todoList);
                 }
 
@@ -204,8 +209,6 @@ const render = (() => {
         }
     }
 
-
-
     todoBtn.onclick = () => {
         todoForm.classList.toggle("hidden");
         hideElement(projectForm);
@@ -217,9 +220,7 @@ const render = (() => {
         hideElement(todoForm);
         todoForm.reset();
         todoList.innerHTML = "";
-
-        // Create todo container
-       createTodoContainer(newTodo);
+        createTodoContainer(newTodo);
 
     }
 
