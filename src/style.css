@@ -139,3 +139,9 @@ h5 {
     font-size: 1.1rem;
     padding: 1rem;
 }
+
+.editContainer {
+    background-color: rgb(229, 229, 229);
+    padding: 1rem;
+    border-bottom: rgb(197, 197, 197);
+}

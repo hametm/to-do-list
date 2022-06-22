@@ -1,5 +1,6 @@
 import { todo, project, editProject, allTodos, allProjects } from "./functions";
 
+
 const render = (() => {
     const projectBtn = document.getElementById("projectBtn");
     const projectForm = document.getElementById("projectForm");
@@ -13,9 +14,11 @@ const render = (() => {
     const todoSubmitBtn = document.getElementById("todoSubmitBtn");
     const title = document.getElementById("title");
     const dueDate = document.getElementById("dueDate");
-    const priority = document.querySelector('input[name="priority"]');
+    let priorityButtons = document.getElementsByName("priority");
+    let priority = "";
     const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
+
 
     const noTodos = document.createElement("h5");
     noTodos.textContent = "No to-dos for this project yet!";
@@ -78,53 +81,62 @@ const render = (() => {
                 const container = document.createElement("div");
                 const title = document.createElement("p");
                 const detailsBtn = document.createElement("button");
-                const editBtn = document.createElement("button");
                 const deleteBtn = document.createElement("button");
                 const todoBtnContainer = document.createElement("div");
                 todoBtnContainer.classList.add("todoBtnContainer");
 
+
+                detailsBtn.textContent = "Details";
+                deleteBtn.textContent = "Delete";
+                container.classList.add("todoContainer");
+                title.textContent = todo.title;
+
+                todoBtnContainer.append(detailsBtn, deleteBtn);
+                container.append(title, todoBtnContainer);
+                todoList.appendChild(container);
+
+                // Details button
                 const todoDetails = document.createElement("div");
+                const titleLabel = document.createElement("p");
+                const todoTitle = document.createElement("p");
                 const dueDateLabel = document.createElement("p");
                 const dueDate = document.createElement("p");
                 const priorityLabel = document.createElement("p");
                 const priority = document.createElement("p");
+                const projectLabel = document.createElement("p");
+                const todoProject = document.createElement("p");
+                const titleDiv = document.createElement("div");
+                const dueDateDiv = document.createElement("div");
+                const priorityDiv = document.createElement("div");
+                const projectDiv = document.createElement("div");
+
+
+                titleLabel.textContent = "Title: ";
+                todoTitle.textContent = todo.title;
                 dueDateLabel.textContent = "Due Date: ";
                 dueDate.textContent = todo.dueDate;
                 priorityLabel.textContent = "Priority: ";
                 priority.textContent = todo.priority;
                 todoDetails.classList.add("todoDetails");
+                projectLabel.textContent = "Project: ";
+                todoProject.textContent = todo.project;
+
+                titleDiv.append(titleLabel, todoTitle);
+                dueDateDiv.append(dueDateLabel, dueDate);
+                priorityDiv.append(priorityLabel, priority);
+                projectDiv.append(projectLabel, todoProject);
+
                 hideElement(todoDetails);
                 removeNoTodoMessage(project);
 
-
-
-
-                const editContainer = document.createElement("div");
-                editContainer.classList.add("editContainer");
-                
-
-
-
-                detailsBtn.textContent = "Details";
-                editBtn.textContent = "Edit";
-                deleteBtn.textContent = "Delete";
-                container.classList.add("todoContainer");
-                title.textContent = todo.title;
-
-                todoBtnContainer.append(detailsBtn, editBtn, deleteBtn);
-                container.append(title, todoBtnContainer);
-                todoList.appendChild(container);
-
                 detailsBtn.onclick = () => {
                     todoDetails.classList.toggle("hidden");
-                    todoDetails.append(dueDateLabel, dueDate, priorityLabel, priority);
+                    todoDetails.append(titleDiv, dueDateDiv, priorityDiv, projectDiv);
                     container.after(todoDetails);
+                   
                 }
 
-                editBtn.onclick = () => {
-
-                }
-
+                
                 deleteBtn.onclick = () => {
                     editProject.removeFromProject(project, todo);
                     const index = allTodos.indexOf(todo);
@@ -229,13 +241,23 @@ const render = (() => {
         }
     }
 
+    function getPriorityValue() {
+        for (let i = 0; i < priorityButtons.length; i++) {
+            if (priorityButtons[i].checked) {
+                priority = priorityButtons[i];
+            }
+        }
+    }
+
     todoBtn.onclick = () => {
         todoForm.classList.toggle("hidden");
         hideElement(projectForm);
     }
     
     todoSubmitBtn.onclick = () => {
-        const newTodo = todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
+  
+        getPriorityValue();
+        const newTodo = todo(title.value, dueDate.value, priority.value, selectedProject.value); // Priority doesn't work
         pushToTodoList(newTodo);
         hideElement(todoForm);
         todoForm.reset();
