@@ -110,3 +110,17 @@ button:active {
     display: flex;
     gap: 1rem;
 }
+
+fieldset {
+    border: none;
+    padding: 0px;
+}
+
+form {
+    padding: 1rem;
+    gap: .5rem;
+}
+
+.formSection {
+    padding: .25rem;
+}

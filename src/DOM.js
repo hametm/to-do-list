@@ -65,6 +65,22 @@ const render = (() => {
                 const todoBtnContainer = document.createElement("div");
                 todoBtnContainer.classList.add("todoBtnContainer");
 
+                const todoDetails = document.createElement("div");
+                const dueDate = document.createElement("p");
+                const priority = document.createElement("p");
+                dueDate.textContent = todo.dueDate;
+                priority.textContent = todo.priority;
+                hideElement(todoDetails);
+
+
+
+
+                const editContainer = document.createElement("div");
+                editContainer.classList.add("editContainer");
+                
+
+
+
                 detailsBtn.textContent = "Details";
                 editBtn.textContent = "Edit";
                 deleteBtn.textContent = "Delete";
@@ -76,11 +92,7 @@ const render = (() => {
                 todoList.appendChild(container);
 
                 detailsBtn.onclick = () => {
-                    const todoDetails = document.createElement("div");
-                    const dueDate = document.createElement("p");
-                    const priority = document.createElement("p");
-                    dueDate.textContent = todo.dueDate;
-                    priority.textContent = todo.priority;
+                    todoDetails.classList.toggle("hidden");
                     todoDetails.append(dueDate, priority);
                     container.appendChild(todoDetails);
                 }
@@ -193,7 +205,7 @@ const render = (() => {
 
 
     todoBtn.onclick = () => {
-        todoForm.classList.remove("hidden");
+        todoForm.classList.toggle("hidden");
     }
     
     todoSubmitBtn.onclick = () => {
@@ -219,7 +231,7 @@ const render = (() => {
     }
     
     projectBtn.onclick = () => {
-        projectForm.classList.remove("hidden");
+        projectForm.classList.toggle("hidden");
     }
 
     projectSubmitBtn.onclick = () => {
