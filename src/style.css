@@ -117,6 +117,8 @@ fieldset {
 
 form {
     padding: .5rem;
+    border-bottom: rgb(197, 197, 197);
+
 }
 
 .formSection {
@@ -131,4 +133,9 @@ h3 {
     background-color: rgb(229, 229, 229);
     padding: 1rem;
     border-bottom: rgb(197, 197, 197);
+}
+
+h5 {
+    font-size: 1.1rem;
+    padding: 1rem;
 }

@@ -17,6 +17,10 @@ const render = (() => {
     const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
 
+    const noTodos = document.createElement("h5");
+    noTodos.textContent = "No to-dos for this project yet!";
+    todoList.appendChild(noTodos);
+
     function createDefaultProject() {
         const defaultProject = project("Untitled", "", true);
         pushToProjects(defaultProject);
@@ -33,7 +37,10 @@ const render = (() => {
         const projectTitle = document.createElement("h3");
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
-
+        if (allProjects.length > 1) {
+            deselectProjects();
+        }
+        project.isSelected = true;
         toggleSelectedContainer(project, projectContainer);
         renderProjectContainer(project, projectContainer, projectTitle, projectDescription, projectSelection);
         updateTodoDiv(projectContainer, project);
@@ -50,6 +57,18 @@ const render = (() => {
 
         container.append(title, description);
         projectList.append(container);
+    }
+
+    function removeNoTodoMessage(project) {
+        if (project.todoList.length > 0) {
+            noTodos.remove();
+        }
+    }
+
+    function addNoTodoMessage(project) {
+        if (project.todoList.length === 0) {
+            todoList.appendChild(noTodos);
+        }
     }
 
     function showTodo(project) {
@@ -75,6 +94,7 @@ const render = (() => {
                 priority.textContent = todo.priority;
                 todoDetails.classList.add("todoDetails");
                 hideElement(todoDetails);
+                removeNoTodoMessage(project);
 
 
 
@@ -111,7 +131,7 @@ const render = (() => {
                     allTodos.splice(index, 1);
                     container.remove();
                     todoDetails.remove();
-                    console.log(project.todoList);
+                    addNoTodoMessage(project);
                 }
 
             }
@@ -120,7 +140,7 @@ const render = (() => {
     
     function updateTodoDiv(container, project) {
         container.onclick = () => {
-            deselectProject();
+            deselectProjects();
             showTodo(project);
             selectProject(project);
             toggleSelectedContainer(project, container);
@@ -174,7 +194,7 @@ const render = (() => {
 
     }
 
-    function deselectProject() {
+    function deselectProjects() {
         todoList.innerHTML = "";
         for (let i = 0; i < allProjects.length; i++) {
             const project = allProjects[i];
@@ -242,10 +262,9 @@ const render = (() => {
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
         pushToProjects(newProject);
-        deselectProject();
+        deselectProjects();
         const defaultContainer = document.querySelector(".defaultContainer");
         defaultContainer.classList.remove("selectedContainer");
-        newProject.isSelected = true;
         displayProject(newProject);
         hideElement(projectForm);
         projectForm.reset();
