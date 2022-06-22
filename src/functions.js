@@ -1,5 +1,5 @@
-const todo = (title, dueDate, priority) => {
-    return { title, dueDate, priority };
+const todo = (title, dueDate, priority, project) => {
+    return { title, dueDate, priority, project };
 }
 
 // const editTodo = (todo) => {

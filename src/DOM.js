@@ -14,6 +14,7 @@ const render = (() => {
     const title = document.getElementById("title");
     const dueDate = document.getElementById("dueDate");
     const priority = document.querySelector('input[name="priority"]');
+    const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
     
     todoBtn.onclick = () => {
@@ -21,7 +22,7 @@ const render = (() => {
     }
     
     todoSubmitBtn.onclick = () => {
-        const newTodo = todo(title.value, dueDate.value, priority.checked); // Priority doesn't work
+        const newTodo = todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
         console.log(newTodo);
         const newTodoContainer = document.createElement("div");
         const newTodoTitle = document.createElement("h4");
