@@ -28,10 +28,8 @@ const render = (() => {
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
 
-        // This doesn't seem to work yet
         if (project.title === "Untitled") {
             projectContainer.classList.add("selectedContainer");
-            showTodo(project);
         }
     
         projectContainer.classList.add("projectContainer");
@@ -50,7 +48,7 @@ const render = (() => {
     
     }
     
-    function displayTodo(todo) {
+    function renderTodo(todo) {
         const todoContainer = document.createElement("div");
         const todoTitle = document.createElement("h4");
         const todoDueDate = document.createElement("p");
@@ -81,9 +79,26 @@ const render = (() => {
     function showTodo(project) {
         for (let i = 0; i < allTodos.length; i++) {
             if ((allTodos[i]).project == project.title) {
-                let todo = document.createElement("p");
-                todo.textContent = (allTodos[i]).title;
-                todoList.appendChild(todo);
+                const todo = allTodos[i];
+                const container = document.createElement("div");
+                const title = document.createElement("p");
+                const todoBtn = document.createElement("button");
+                todoBtn.textContent = "Details";
+                title.textContent = todo.title;
+                container.append(title, todoBtn);
+                todoList.appendChild(container);
+
+                todoBtn.onclick = () => {
+                    const todoDetails = document.createElement("div");
+                    const dueDate = document.createElement("p");
+                    const priority = document.createElement("p");
+                    dueDate.textContent = todo.dueDate;
+                    priority.textContent = todo.priority;
+                    todoDetails.append(dueDate, priority);
+                    container.appendChild(todoDetails);
+                }
+
+
             }
         }
     }
@@ -94,12 +109,19 @@ const render = (() => {
     
     todoSubmitBtn.onclick = () => {
         const newTodo = todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
-        displayTodo(newTodo);
+        renderTodo(newTodo);
         allTodos.push(newTodo);
         todoForm.classList.add("hidden");
+        todoForm.reset();
 
         // if (newTodo.project === "Untitled") {
-
+        //     for (let i = 0; i < allTodos.length; i++) {
+        //         // if ((allTodos[i]).project == newTodo.project) {
+        //             let todo = document.createElement("p");
+        //             todo.textContent = (allTodos[i]).title;
+        //             todoList.appendChild(todo);
+        //         // }
+        //     }
         // }
 
     }
@@ -112,6 +134,8 @@ const render = (() => {
         const newProject = project(projectTitle.value, description.value);
         displayProject(newProject);
         projectForm.classList.add("hidden");
+        projectForm.reset();
+
     }
 
 })();
