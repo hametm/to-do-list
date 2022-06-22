@@ -18,55 +18,15 @@ const render = (() => {
     const todoList = document.getElementById("todoList");
 
 
-    // Default project
-
     function createDefaultProject() {
         const defaultProject = project("Untitled", "", true);
         pushToProjects(defaultProject);
         displayProject(defaultProject);
     }
 
-    function createProject() {
-        project(projectTitle.value, description.value);
-    }
-
-    function createTodo() {
-        todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
-    }
-
-    function pushToProjects(project) {
-        allProjects.push(project);
-    }
-
-    function pushToTodoList(todo) {
-        allTodos.push(todo);
-    }
-
-    function toggleSelectedContainer(project, container) {
-        if (project.isSelected === false) {
-            container.classList.remove("selectedContainer");
-        }
-        if (project.isSelected === true) {
-            container.classList.add("selectedContainer");
-        }
-        if (project.title === "Untitled") {
-            container.classList.add("defaultContainer");
-        }
-    }
-
-    function renderProjectContainer(project, container, title, description, selection) {
-        container.classList.add("projectContainer");
-        selection.textContent = `${project.title}`;
-        selectedProject.appendChild(selection);
-    
-        title.textContent = project.title;
-        description.textContent = project.description;
-
-        container.append(title, description);
-        projectList.append(container);
-    }
-
     createDefaultProject();
+    toggleDisabledButton(projectTitle, projectSubmitBtn);
+    toggleDisabledButton(title, todoSubmitBtn);
 
 
     function displayProject(project) {
@@ -81,48 +41,16 @@ const render = (() => {
     
     }
 
-    function hideElement(element) {
-        element.classList.add("hidden");
-    }
+    function renderProjectContainer(project, container, title, description, selection) {
+        container.classList.add("projectContainer");
+        selection.textContent = `${project.title}`;
+        selectedProject.appendChild(selection);
     
-    function renderTodo(todo) {
-        const todoContainer = document.createElement("div");
-        const todoTitle = document.createElement("h4");
-        const todoDueDate = document.createElement("p");
+        title.textContent = project.title;
+        description.textContent = project.description;
 
-        todoContainer.classList.add("todoContainer");
-        todoTitle.textContent = todo.title;
-        todoDueDate.textContent = todo.dueDate;
-
-        todoContainer.append(todoTitle, todoDueDate);
-        todoContainer.classList.add(`todo${todo.project}`);
-
-    }
-
-    function deselectProject() {
-        todoList.innerHTML = "";
-        for (let i = 0; i < allProjects.length; i++) {
-            const project = allProjects[i];
-            project.isSelected = false;
-        }
-        const allContainers = document.querySelectorAll(".projectContainer");
-            allContainers.forEach(div => {
-                div.classList.remove("selectedContainer");
-            });
-    }
-
-    function selectProject(project) {
-        project.isSelected = true;
-    }
-
-    function updateTodoDiv(container, project) {
-        container.onclick = () => {
-            deselectProject();
-            showTodo(project);
-            selectProject(project);
-            toggleSelectedContainer(project, container);
-        }
-
+        container.append(title, description);
+        projectList.append(container);
     }
 
     function showTodo(project) {
@@ -170,6 +98,99 @@ const render = (() => {
             }
         }
     }
+    
+    function updateTodoDiv(container, project) {
+        container.onclick = () => {
+            deselectProject();
+            showTodo(project);
+            selectProject(project);
+            toggleSelectedContainer(project, container);
+        }
+
+    }
+
+    function createProject() {
+        project(projectTitle.value, description.value);
+    }
+
+    function createTodo() {
+        todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
+    }
+
+    function pushToProjects(project) {
+        allProjects.push(project);
+    }
+
+    function pushToTodoList(todo) {
+        allTodos.push(todo);
+    }
+
+    function toggleSelectedContainer(project, container) {
+        if (project.isSelected === false) {
+            container.classList.remove("selectedContainer");
+        }
+        if (project.isSelected === true) {
+            container.classList.add("selectedContainer");
+        }
+        if (project.title === "Untitled") {
+            container.classList.add("defaultContainer");
+        }
+    }
+
+    function hideElement(element) {
+        element.classList.add("hidden");
+    }
+    
+    function renderTodo(todo) {
+        const todoContainer = document.createElement("div");
+        const todoTitle = document.createElement("h4");
+        const todoDueDate = document.createElement("p");
+
+        todoContainer.classList.add("todoContainer");
+        todoTitle.textContent = todo.title;
+        todoDueDate.textContent = todo.dueDate;
+
+        todoContainer.append(todoTitle, todoDueDate);
+        todoContainer.classList.add(`todo${todo.project}`);
+
+    }
+
+    function deselectProject() {
+        todoList.innerHTML = "";
+        for (let i = 0; i < allProjects.length; i++) {
+            const project = allProjects[i];
+            project.isSelected = false;
+        }
+        const allContainers = document.querySelectorAll(".projectContainer");
+            allContainers.forEach(div => {
+                div.classList.remove("selectedContainer");
+            });
+    }
+
+    function selectProject(project) {
+        project.isSelected = true;
+    }
+
+    function toggleDisabledButton(title, button) {
+        disableButton(title, button);
+        enableButton(title, button);
+    }
+
+    function disableButton(title, button) {
+        if (title.value === "") {
+            button.disabled = true;
+        }
+    }
+
+    function enableButton(title, button) {
+        title.oninput = () => {
+            if (!(title.value === "")) {
+                button.disabled = false;
+            }
+        }
+    }
+
+
 
     todoBtn.onclick = () => {
         todoForm.classList.remove("hidden");
@@ -183,42 +204,24 @@ const render = (() => {
         todoList.innerHTML = "";
 
         // Create todo container
+       createTodoContainer(newTodo);
+
+    }
+
+    function createTodoContainer(todo) {
         for (let i = 0; i < allProjects.length; i++) {
             const project = allProjects[i];
             if (project.isSelected === true) {
                 showTodo(project);
-                project.todoList.push(newTodo);
+                project.todoList.push(todo);
             }
         }
-
     }
     
     projectBtn.onclick = () => {
         projectForm.classList.remove("hidden");
     }
 
-    function toggleDisabledButton() {
-        disableButton();
-        enableButton();
-    }
-
-    toggleDisabledButton();
-
-    function disableButton() {
-        if (projectTitle.value === "") {
-            projectSubmitBtn.disabled = true;
-        }
-    }
-
-    function enableButton() {
-        projectTitle.oninput = () => {
-            if (!(projectTitle.value === "")) {
-                projectSubmitBtn.disabled = false;
-            }
-        }
-    }
-
-  
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
         pushToProjects(newProject);
@@ -229,7 +232,6 @@ const render = (() => {
         displayProject(newProject);
         hideElement(projectForm);
         projectForm.reset();
-
     }
 
 })();
