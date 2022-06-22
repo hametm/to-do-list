@@ -16,7 +16,35 @@ const render = (() => {
     const priority = document.querySelector('input[name="priority"]');
     const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
+
+
+    // Default project
+    const defaultProject = project("Untitled");
+
+    function setProject(project) {
+        const newProjectContainer = document.createElement("div");
+        const newProjectTitle = document.createElement("h3");
+        const newProjectDescription = document.createElement("p");
+        const newProjectSelection = document.createElement("option");
     
+        newProjectContainer.classList.add("projectContainer");
+        newProjectSelection.textContent = `${project.title}`;
+    
+        selectedProject.appendChild(newProjectSelection);
+    
+        newProjectTitle.textContent = project.title;
+        newProjectDescription.textContent = project.description;
+    
+        newProjectContainer.append(newProjectTitle, newProjectDescription);
+        projectList.append(newProjectContainer);
+
+        displayTasks(newProjectContainer, project);
+    
+    }
+    
+    setProject(defaultProject);
+
+
     todoBtn.onclick = () => {
         todoForm.classList.remove("hidden");
     }
@@ -46,40 +74,27 @@ const render = (() => {
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
         console.log(newProject);
-        const newProjectContainer = document.createElement("div");
-        const newProjectTitle = document.createElement("h3");
-        const newProjectDescription = document.createElement("p");
-        const newProjectSelection = document.createElement("option");
-
-        newProjectContainer.classList.add("projectContainer");
-        // newProjectContainer.classList.add(`${newProject.title}`);
-        newProjectSelection.textContent = `${newProject.title}`;
-
-        selectedProject.appendChild(newProjectSelection);
-
-        newProjectTitle.textContent = newProject.title;
-        newProjectDescription.textContent = newProject.description;
-    
-        newProjectContainer.append(newProjectTitle, newProjectDescription);
-        projectList.append(newProjectContainer);
+        setProject(newProject);
         projectForm.classList.add("hidden");
 
-        displayTasks(newProjectContainer, newProject);
+        
 
     }
 
     function displayTasks(container, project) {
         container.onclick = () => {
             console.log("project test: " + project.title);
+            todoList.innerHTML = "";
             const todos = document.querySelectorAll(`.${project.title}`);
             const allContainers = document.querySelectorAll(".projectContainer");
             allContainers.forEach(div => {
                 div.classList.remove("selectedContainer");
             })
-            todos.forEach(div => {
-                todoList.appendChild(div);
-            });
+            // todos.forEach(div => {
+            //     todoList.appendChild(div);
+            // });
             container.classList.add("selectedContainer");
+            todoList.append("Todos go here");
             // todoList.append(project.todoList);
         }
 
