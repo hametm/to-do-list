@@ -1,4 +1,4 @@
-import { todo, project, allTodos, allProjects } from "./functions";
+import { todo, project, editProject, allTodos, allProjects } from "./functions";
 
 const render = (() => {
     const projectBtn = document.getElementById("projectBtn");
@@ -100,14 +100,23 @@ const render = (() => {
                 const todo = allTodos[i];
                 const container = document.createElement("div");
                 const title = document.createElement("p");
-                const todoBtn = document.createElement("button");
-                todoBtn.textContent = "Details";
+                const detailsBtn = document.createElement("button");
+                const editBtn = document.createElement("button");
+                const deleteBtn = document.createElement("button");
+                const todoBtnContainer = document.createElement("div");
+                todoBtnContainer.classList.add("todoBtnContainer");
+
+                detailsBtn.textContent = "Details";
+                editBtn.textContent = "Edit";
+                deleteBtn.textContent = "Delete";
                 container.classList.add("todoContainer");
                 title.textContent = todo.title;
-                container.append(title, todoBtn);
+
+                todoBtnContainer.append(detailsBtn, editBtn, deleteBtn);
+                container.append(title, todoBtnContainer);
                 todoList.appendChild(container);
 
-                todoBtn.onclick = () => {
+                detailsBtn.onclick = () => {
                     const todoDetails = document.createElement("div");
                     const dueDate = document.createElement("p");
                     const priority = document.createElement("p");
@@ -117,6 +126,15 @@ const render = (() => {
                     container.appendChild(todoDetails);
                 }
 
+                editBtn.onclick = () => {
+
+                }
+
+                deleteBtn.onclick = () => {
+                    editProject.removeFromProject(project, todo);
+                    container.remove();
+                    console.log(project.todoList);
+                }
 
             }
         }
@@ -139,6 +157,7 @@ const render = (() => {
             const project = allProjects[i];
             if (project.isSelected === true) {
                 showTodo(project);
+                project.todoList.push(newTodo);
             }
         }
 

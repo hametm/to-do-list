@@ -35,6 +35,7 @@ const allProjects = [];
 export { 
     todo, 
     project,
+    editProject,
     allTodos,
     allProjects
 };
