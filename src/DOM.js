@@ -36,6 +36,9 @@ const render = (() => {
         if (project.isSelected === true) {
             projectContainer.classList.add("selectedContainer");
         }
+        if (project.title === "Untitled") {
+            projectContainer.classList.add("defaultContainer");
+        }
     
         projectContainer.classList.add("projectContainer");
         projectSelection.textContent = `${project.title}`;
@@ -99,6 +102,7 @@ const render = (() => {
                 const title = document.createElement("p");
                 const todoBtn = document.createElement("button");
                 todoBtn.textContent = "Details";
+                container.classList.add("todoContainer");
                 title.textContent = todo.title;
                 container.append(title, todoBtn);
                 todoList.appendChild(container);
@@ -128,37 +132,13 @@ const render = (() => {
         allTodos.push(newTodo);
         todoForm.classList.add("hidden");
         todoForm.reset();
+        todoList.innerHTML = "";
 
         // Create todo container
-        // Figure out weird stuff, like things getting added multiple times and classes not showing up
         for (let i = 0; i < allProjects.length; i++) {
             const project = allProjects[i];
             if (project.isSelected === true) {
-                for (let i = 0; i < allTodos.length; i++) {
-                    if ((allTodos[i]).project == project.title) {
-                        const todo = allTodos[i];
-                        const container = document.createElement("div");
-                        container.classList.add("todoContainer");
-                        const title = document.createElement("p");
-                        const todoBtn = document.createElement("button");
-                        todoBtn.textContent = "Details";
-                        title.textContent = todo.title;
-                        container.append(title, todoBtn);
-                        todoList.appendChild(container);
-        
-                        todoBtn.onclick = () => {
-                            const todoDetails = document.createElement("div");
-                            const dueDate = document.createElement("p");
-                            const priority = document.createElement("p");
-                            dueDate.textContent = todo.dueDate;
-                            priority.textContent = todo.priority;
-                            todoDetails.append(dueDate, priority);
-                            container.appendChild(todoDetails);
-                        }
-        
-        
-                    }
-                }
+                showTodo(project);
             }
         }
 
@@ -171,6 +151,13 @@ const render = (() => {
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
         allProjects.push(newProject);
+        for (let i = 0; i < allProjects.length; i++) {
+            const project = allProjects[i];
+            project.isSelected = false;
+            }
+        const defaultContainer = document.querySelector(".defaultContainer");
+        defaultContainer.classList.remove("selectedContainer");
+        newProject.isSelected = true;
         displayProject(newProject);
         projectForm.classList.add("hidden");
         projectForm.reset();
