@@ -60,3 +60,7 @@ button:hover {
     border-bottom: 1px solid grey;
     margin: 0;
 }
+
+.selectedContainer {
+    background-color: rgb(197, 197, 197);
+}

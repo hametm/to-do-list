@@ -33,9 +33,11 @@ const render = (() => {
         newTodoDueDate.textContent = newTodo.dueDate;
 
         newTodoContainer.append(newTodoTitle, newTodoDueDate);
-        todoList.appendChild(newTodoContainer);
+        newTodoContainer.classList.add(`${newTodo.project}`); 
+        // console.log(newTodoContainer.className);
 
         todoForm.classList.add("hidden");
+
     }
     
     projectBtn.onclick = () => {
@@ -48,15 +50,33 @@ const render = (() => {
         const newProjectContainer = document.createElement("div");
         const newProjectTitle = document.createElement("h3");
         const newProjectDescription = document.createElement("p");
+        const newProjectSelection = document.createElement("option");
 
         newProjectContainer.classList.add("projectContainer");
+        newProjectContainer.classList.add(`${newProject.title}`);
+        newProjectSelection.textContent = `${newProject.title}`;
+
+        selectedProject.appendChild(newProjectSelection);
+
         newProjectTitle.textContent = newProject.title;
         newProjectDescription.textContent = newProject.description;
     
-        newProjectContainer.append(newProjectTitle, newProjectDescription)
+        newProjectContainer.append(newProjectTitle, newProjectDescription);
         projectList.append(newProjectContainer);
         projectForm.classList.add("hidden");
+
+        displayTasks(newProjectContainer);
+
     }
+
+    function displayTasks(container) {
+        container.onclick = () => {
+            container.classList.toggle("selectedContainer");
+            // todoList.append(project.todoList);
+        }
+
+    }
+
 })();
 
 export { render };
