@@ -1,6 +1,6 @@
 import { todo, project } from "./functions";
 
-const render = () => {
+const render = (() => {
     const projectBtn = document.getElementById("projectBtn");
     const projectForm = document.getElementById("projectForm");
     const projectSubmitBtn = document.getElementById("projectSubmitBtn");
@@ -14,6 +14,7 @@ const render = () => {
     const title = document.getElementById("title");
     const dueDate = document.getElementById("dueDate");
     const priority = document.querySelector('input[name="priority"]');
+    const todoList = document.getElementById("todoList");
     
     todoBtn.onclick = () => {
         todoForm.classList.remove("hidden");
@@ -22,6 +23,18 @@ const render = () => {
     todoSubmitBtn.onclick = () => {
         const newTodo = todo(title.value, dueDate.value, priority.checked); // Priority doesn't work
         console.log(newTodo);
+        const newTodoContainer = document.createElement("div");
+        const newTodoTitle = document.createElement("h4");
+        const newTodoDueDate = document.createElement("p");
+
+        newTodoContainer.classList.add("todoContainer");
+        newTodoTitle.textContent = newTodo.title;
+        newTodoDueDate.textContent = newTodo.dueDate;
+
+        newTodoContainer.append(newTodoTitle, newTodoDueDate);
+        todoList.appendChild(newTodoContainer);
+
+        todoForm.classList.add("hidden");
     }
     
     projectBtn.onclick = () => {
@@ -31,13 +44,18 @@ const render = () => {
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
         console.log(newProject);
+        const newProjectContainer = document.createElement("div");
         const newProjectTitle = document.createElement("h3");
-        newProjectTitle.textContent = newProject.title;
         const newProjectDescription = document.createElement("p");
+
+        newProjectContainer.classList.add("projectContainer");
+        newProjectTitle.textContent = newProject.title;
         newProjectDescription.textContent = newProject.description;
     
-        projectList.append(newProjectTitle, newProjectDescription);
+        newProjectContainer.append(newProjectTitle, newProjectDescription)
+        projectList.append(newProjectContainer);
+        projectForm.classList.add("hidden");
     }
-}
+})();
 
 export { render };
