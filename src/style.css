@@ -17,7 +17,23 @@ body {
 header {
     background-color: rgb(0, 119, 128);
     display: flex;
-    padding-left: 2rem;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Bungee Shade', cursive;
+    color: white;
+    font-size: 2.6rem;
+    margin-left: 30px;
+}
+
+#rainbow {
+    height: 10px;
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, 
+    rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, 
+    rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
 }
 
 main {
@@ -30,6 +46,10 @@ main {
     display: flex;
     flex-direction: column;
 
+}
+
+.formSelector p {
+    font-size: 1.15rem;
 }
 
 #projects h2 {
@@ -51,12 +71,6 @@ main {
     margin-bottom: 0px;
 }
 
-h1 {
-    font-family: 'Bungee Shade', cursive;
-    color: white;
-    font-size: 2.5rem;
-}
-
 .side {
     display: flex;
     flex-direction: column;
@@ -70,32 +84,60 @@ h1 {
     display: none;
 }
 
-button {
+button, input[type=button] {
     background-color: rgb(205, 135, 191);
     border: none;
     box-shadow: -2px 2px 5px grey;
-    padding: 5px;
+    padding: 8px;
     border-radius: 5px;
     color: white;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1rem;
 }
 
-button:hover {
+button:hover, input[type=button]:hover {
     cursor: pointer;
     background-color: rgb(172, 110, 160);
 }
 
-button:active {
+button:active, input[type=button]:active {
     transform: translate(2px, 2px);
+}
+
+.cancelBtn {
+    background-color: rgba(255,0,0,1) !important;
+    margin-left: .5rem;
+}
+
+.cancelBtn:hover {
+    background-color: rgb(177, 16, 16) !important;
+}
+
+.submitBtn {
+    background-color: rgba(79,220,74,1) !important;
+}
+
+.submitBtn:disabled:hover {
+    background-color: rgba(79,220,74,1) !important;
+    cursor: default;
+}
+
+.submitBtn:hover {
+    background-color: rgb(30, 162, 30) !important;
 }
 
 .projectContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0;
-    padding: 1rem;
+    margin: .75rem;
+    padding-left: 1.5rem;
+    border-radius: 8px;
+}
+
+.projectContainer:hover {
+    cursor: pointer;
+    background-color: var(--dark-grey);
 }
 
 .selectedContainer {
@@ -109,8 +151,8 @@ button:active {
     justify-content: space-between;
     align-items: center;
     height: 30px;
-    border-bottom: 1px solid var(--dark-grey);
     margin: .5rem 1rem;
+    border-radius: 8px;
 }
 
 .todoBtnContainer {
@@ -130,38 +172,38 @@ form {
     background-color: var(--light-grey);
 }
 
+select, option {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: .9rem;
+}
+
+input[type=text], input[type=date] {
+    border-radius: 8px;
+    border: 1px solid var(--light-grey);
+    height: 20px;
+    margin-left: .5rem;
+}
+
 .formSelector {
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-    margin-left: 1.5rem;
+    margin-left: 2rem;
     margin-top: 1rem;
+}
+
+.formSelector p {
+    margin: 0;
+}
+
+#todoBtn p {
+    margin-left: 1rem;
 }
 
 .formSelector:hover {
     cursor: pointer;
+    color: rgb(119, 119, 119);
 }
 
 .formSection {
     padding: .5rem;
-}
-
-.plusBtn {
-    border-radius: 50%;
-    height: 40px;
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-}
-
-.plusBtn:hover {
-    background-color: rgb(205, 135, 191);
-}
-
-.plusBtn:active {
-    transform: none;
 }
 
 h3 {
@@ -171,7 +213,8 @@ h3 {
 .todoDetails {
     background-color: var(--light-grey);
     padding: 1rem;
-    border-bottom: var(--dark-grey);
+    margin: -.5rem 1rem 0rem 1rem;
+    border-top: 1px solid var(--dark-grey);
 }
 
 h5 {
@@ -186,5 +229,9 @@ h5 {
 }
 
 .deleteBtn {
-    background-color: rgb(198, 2, 2);
+    background-color: rgba(255,0,0,1);
+}
+
+.deleteBtn:hover {
+    background-color: rgb(177, 16, 16);
 }

@@ -8,6 +8,7 @@ const render = (() => {
     const description = document.getElementById("description");
     const projectTitle = document.getElementById("projectTitle");
     const projectList = document.getElementById("projectList");
+    const projectCancelBtn = document.getElementById("projectCancelBtn");
     
     const todoBtn = document.getElementById("todoBtn");
     const todoForm = document.getElementById("todoForm");
@@ -18,10 +19,9 @@ const render = (() => {
     let priority = "";
     const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
+    const todoCancelBtn = document.getElementById("todoCancelBtn");
 
     createDefaultProject();
-    toggleDisabledButton(projectTitle, projectSubmitBtn);
-    toggleDisabledButton(title, todoSubmitBtn);
 
 
     function createDefaultProject() {
@@ -210,6 +210,8 @@ const render = (() => {
 
     todoBtn.onclick = () => {
         toggleHidden(todoForm);
+        toggleHidden(todoBtn);
+        toggleDisabledButton(title, todoSubmitBtn);
     }
     
     todoSubmitBtn.onclick = () => {
@@ -221,6 +223,7 @@ const render = (() => {
         todoForm.reset();
         todoList.innerHTML = "";
         createTodoContainer(newTodo);
+        toggleHidden(todoBtn);
 
     }
 
@@ -237,6 +240,7 @@ const render = (() => {
     projectBtn.onclick = () => {
         toggleHidden(projectForm);
         toggleHidden(projectBtn);
+        toggleDisabledButton(projectTitle, projectSubmitBtn);
     }
 
     projectSubmitBtn.onclick = () => {
@@ -249,7 +253,16 @@ const render = (() => {
         hideElement(projectForm);
         projectForm.reset();
         toggleHidden(projectBtn);
+    }
 
+    todoCancelBtn.onclick = () => {
+        toggleHidden(todoForm);
+        toggleHidden(todoBtn);
+    }
+
+    projectCancelBtn.onclick = () => {
+        toggleHidden(projectForm);
+        toggleHidden(projectBtn);
     }
 
 })();

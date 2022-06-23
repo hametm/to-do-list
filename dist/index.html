@@ -10,14 +10,14 @@
 <body>
     <header>
         <h1>To Do!</h1>
+        <div id="rainbow"></div>
     </header>
     <main>
         <div id="projects" class="side">
             <h2>Your Projects</h2>
             <div id="projectList" class="list"></div>
             <div id="projectBtn" class="formSelector">
-                <button class="plusBtn">+</button>
-                <p>New Project</p>
+                <p>+ New Project</p>
             </div>
             <form action="" id="projectForm" class="hidden">
                 <div class="formSection">
@@ -29,7 +29,8 @@
                     <input type="text" id="description">
                 </div>
                 <div iclass="formSection">
-                    <input type="button" id="projectSubmitBtn" value="Submit">
+                    <input type="button" id="projectSubmitBtn" value="Submit" class="submitBtn">
+                    <input type="button" id="projectCancelBtn" value="Cancel" class="cancelBtn">
                 </div>
             </form>
         </div>
@@ -37,8 +38,7 @@
         <div id="todos" class="side">
             <div id="todoList" class="list"></div>
             <div id="todoBtn" class="formSelector">
-                <button class="plusBtn">+</button>
-                <p>New To-do</p>
+                <p>+ New To-do</p>
             </div>
             <form action="" class="hidden" id="todoForm">
                 <div class="formSection">
@@ -67,7 +67,8 @@
                     </select>
                 </div>
                 <div class="formSection">
-                    <input type="button" id="todoSubmitBtn" value="Submit">
+                    <input type="button" id="todoSubmitBtn" value="Submit" class="submitBtn">
+                    <input type="button" id="todoCancelBtn" value="Cancel" class="cancelBtn">
                 </div>
             </form>
         </div>
