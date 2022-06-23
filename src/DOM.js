@@ -157,6 +157,7 @@ const render = (() => {
             selectProject(project);
             toggleSelectedContainer(project, container);
             addNoTodoMessage(project);
+            removeNoTodoMessage(project);
         }
 
     }
