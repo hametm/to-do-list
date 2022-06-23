@@ -54,6 +54,7 @@ main {
 
 #projects h2 {
     margin-left: 1rem;
+    margin-top: 2rem;
 }
 
 #todos {
@@ -85,7 +86,6 @@ main {
 }
 
 button, input[type=button] {
-    background-color: rgb(205, 135, 191);
     border: none;
     box-shadow: -2px 2px 5px grey;
     padding: 8px;
@@ -97,33 +97,44 @@ button, input[type=button] {
 
 button:hover, input[type=button]:hover {
     cursor: pointer;
-    background-color: rgb(172, 110, 160);
 }
 
 button:active, input[type=button]:active {
     transform: translate(2px, 2px);
 }
 
+input[type=button]:disabled:active {
+    transform: none;
+}
+
+.detailsBtn {
+    background-color: rgba(28,127,238,1);
+}
+
+.detailsBtn:hover {
+    background-color: rgb(22, 100, 188);
+}
+
 .cancelBtn {
-    background-color: rgba(255,0,0,1) !important;
+    background-color: rgba(255,0,0,1);
     margin-left: .5rem;
 }
 
 .cancelBtn:hover {
-    background-color: rgb(177, 16, 16) !important;
+    background-color: rgb(177, 16, 16);
 }
 
 .submitBtn {
-    background-color: rgba(79,220,74,1) !important;
+    background-color: rgba(79,220,74,1);
 }
 
 .submitBtn:disabled:hover {
-    background-color: rgba(79,220,74,1) !important;
+    background-color: rgba(79,220,74,1);
     cursor: default;
 }
 
 .submitBtn:hover {
-    background-color: rgb(30, 162, 30) !important;
+    background-color: rgb(30, 162, 30);
 }
 
 .projectContainer {

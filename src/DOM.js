@@ -71,6 +71,7 @@ const render = (() => {
 
                 todoBtnContainer.classList.add("todoBtnContainer");
                 detailsBtn.textContent = "Details";
+                detailsBtn.classList.add("detailsBtn");
                 deleteBtn.textContent = "Delete";
                 deleteBtn.classList.add("deleteBtn");
                 container.classList.add("todoContainer");
