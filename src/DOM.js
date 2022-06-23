@@ -26,7 +26,7 @@ const render = (() => {
 
     function createDefaultProject() {
         const defaultProject = project("Untitled", "", true);
-        pushToProjects(defaultProject);
+        allProjects.addProject(defaultProject);
         displayProject(defaultProject);
     }
 
@@ -40,10 +40,11 @@ const render = (() => {
         const projectTitle = document.createElement("h3");
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
-        if (allProjects.length > 1) {
+        if (allProjects.projectList.length > 1) {
             deselectProjects();
         }
         project.isSelected = true;
+        addNoTodoMessage(project);
         toggleSelectedContainer(project, projectContainer);
         renderProjectContainer(project, projectContainer, projectTitle, projectDescription, projectSelection);
         updateTodoDiv(projectContainer, project);
@@ -75,9 +76,9 @@ const render = (() => {
     }
 
     function showTodo(project) {
-        for (let i = 0; i < allTodos.length; i++) {
-            if ((allTodos[i]).project == project.title) {
-                const todo = allTodos[i];
+        for (let i = 0; i < allTodos.todoList.length; i++) {
+            if ((allTodos.todoList[i]).project === project.title) {
+                const todo = allTodos.todoList[i];
                 const container = document.createElement("div");
                 const title = document.createElement("p");
                 const detailsBtn = document.createElement("button");
@@ -139,8 +140,7 @@ const render = (() => {
                 
                 deleteBtn.onclick = () => {
                     editProject.removeFromProject(project, todo);
-                    const index = allTodos.indexOf(todo);
-                    allTodos.splice(index, 1);
+                    allTodos.removeTodo(todo);
                     container.remove();
                     todoDetails.remove();
                     addNoTodoMessage(project);
@@ -156,24 +156,9 @@ const render = (() => {
             showTodo(project);
             selectProject(project);
             toggleSelectedContainer(project, container);
+            addNoTodoMessage(project);
         }
 
-    }
-
-    function createProject() {
-        project(projectTitle.value, description.value);
-    }
-
-    function createTodo() {
-        todo(title.value, dueDate.value, priority.checked, selectedProject.value); // Priority doesn't work
-    }
-
-    function pushToProjects(project) {
-        allProjects.push(project);
-    }
-
-    function pushToTodoList(todo) {
-        allTodos.push(todo);
     }
 
     function toggleSelectedContainer(project, container) {
@@ -191,25 +176,11 @@ const render = (() => {
     function hideElement(element) {
         element.classList.add("hidden");
     }
-    
-    function renderTodo(todo) {
-        const todoContainer = document.createElement("div");
-        const todoTitle = document.createElement("h4");
-        const todoDueDate = document.createElement("p");
-
-        todoContainer.classList.add("todoContainer");
-        todoTitle.textContent = todo.title;
-        todoDueDate.textContent = todo.dueDate;
-
-        todoContainer.append(todoTitle, todoDueDate);
-        todoContainer.classList.add(`todo${todo.project}`);
-
-    }
 
     function deselectProjects() {
         todoList.innerHTML = "";
-        for (let i = 0; i < allProjects.length; i++) {
-            const project = allProjects[i];
+        for (let i = 0; i < allProjects.projectList.length; i++) {
+            const project = allProjects.projectList[i];
             project.isSelected = false;
         }
         const allContainers = document.querySelectorAll(".projectContainer");
@@ -255,10 +226,10 @@ const render = (() => {
     }
     
     todoSubmitBtn.onclick = () => {
-  
         getPriorityValue();
         const newTodo = todo(title.value, dueDate.value, priority.value, selectedProject.value); // Priority doesn't work
-        pushToTodoList(newTodo);
+        allTodos.addTodo(newTodo);
+
         hideElement(todoForm);
         todoForm.reset();
         todoList.innerHTML = "";
@@ -267,8 +238,8 @@ const render = (() => {
     }
 
     function createTodoContainer(todo) {
-        for (let i = 0; i < allProjects.length; i++) {
-            const project = allProjects[i];
+        for (let i = 0; i < allProjects.projectList.length; i++) {
+            const project = allProjects.projectList[i];
             if (project.isSelected === true) {
                 showTodo(project);
                 project.todoList.push(todo);
@@ -283,7 +254,7 @@ const render = (() => {
 
     projectSubmitBtn.onclick = () => {
         const newProject = project(projectTitle.value, description.value);
-        pushToProjects(newProject);
+        allProjects.addProject(newProject);
         deselectProjects();
         const defaultContainer = document.querySelector(".defaultContainer");
         defaultContainer.classList.remove("selectedContainer");

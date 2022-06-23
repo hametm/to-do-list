@@ -28,9 +28,25 @@ const editProject = (() => {
     return { addToProject, removeFromProject };
 })();
 
-const allTodos = [];
+const allTodos = (() => {
+    const todoList = []
+    const addTodo = (todo) => todoList.push(todo);
+    const removeTodo = (todo) => {
+        const index = todoList.indexOf(todo);
+        todoList.splice(index, 1);
+    }
+    return { addTodo, removeTodo, todoList }
+})();
 
-const allProjects = [];
+const allProjects = (() => {
+    const projectList = []
+    const addProject = (project) => projectList.push(project);
+    const removeProject = (project) => {
+        const index = projectList.indexOf(project);
+        projectList.splice(index, 1);
+    }
+    return { addProject, removeProject, projectList }
+})();
 
 export { 
     todo, 
