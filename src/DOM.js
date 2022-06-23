@@ -95,29 +95,43 @@ const render = (() => {
                 const dueDateDiv = document.createElement("div");
                 const priorityDiv = document.createElement("div");
                 const projectDiv = document.createElement("div");
+                const cancelBtn = document.createElement("button");
+                const cancelDiv = document.createElement("div");
 
-                titleLabel.textContent = "Title: ";
+                titleLabel.textContent = "Title:";
                 todoTitle.textContent = todo.title;
-                dueDateLabel.textContent = "Due Date: ";
+                dueDateLabel.textContent = "Due date:";
                 dueDate.textContent = todo.dueDate;
-                priorityLabel.textContent = "Priority: ";
+                priorityLabel.textContent = "Priority:";
                 priority.textContent = todo.priority;
                 todoDetails.classList.add("todoDetails");
-                projectLabel.textContent = "Project: ";
+                projectLabel.textContent = "Project:";
                 todoProject.textContent = todo.project;
+                cancelBtn.textContent = "X";
+                cancelBtn.classList.add("todoCancelBtn");
+
+                titleDiv.classList.add("detailsDiv");
+                dueDateDiv.classList.add("detailsDiv");
+                priorityDiv.classList.add("detailsDiv");
+                projectDiv.classList.add("detailsDiv");
+                cancelDiv.classList.add("cancelDiv");
 
                 titleDiv.append(titleLabel, todoTitle);
-                dueDateDiv.append(dueDateLabel, dueDate);
-                priorityDiv.append(priorityLabel, priority);
+                if (todo.dueDate) {
+                    dueDateDiv.append(dueDateLabel, dueDate);
+                }
+                if (todo.priority) {
+                    priorityDiv.append(priorityLabel, priority);
+                }
                 projectDiv.append(projectLabel, todoProject);
+                cancelDiv.append(cancelBtn);
 
                 hideElement(todoDetails);
 
                 detailsBtn.onclick = () => {
                     toggleHidden(todoDetails);
-                    todoDetails.append(titleDiv, dueDateDiv, priorityDiv, projectDiv);
-                    container.after(todoDetails);
-                   
+                    todoDetails.append(cancelDiv, titleDiv, dueDateDiv, priorityDiv, projectDiv);
+                    container.appendChild(todoDetails);
                 }
 
                 
@@ -128,12 +142,18 @@ const render = (() => {
                     todoDetails.remove();
                 }
 
+                cancelBtn.onclick = () => {
+                    toggleHidden(todoDetails);
+                }
+
             }
         }
     }
     
     function updateTodoDiv(container, project) {
         container.onclick = () => {
+            // Make todoDetails disappear here
+
             deselectProjects();
             showTodo(project);
             selectProject(project);
@@ -209,10 +229,20 @@ const render = (() => {
         element.classList.toggle("hidden");
     }
 
+    function setSelectValue() {
+        for (let i = 0; i < allProjects.projectList.length; i++) {
+            const project = allProjects.projectList[i];
+            if (project.isSelected === true) {
+                selectedProject.value = project.title;
+            }
+        } 
+    }
+
     todoBtn.onclick = () => {
         toggleHidden(todoForm);
         toggleHidden(todoBtn);
         toggleDisabledButton(title, todoSubmitBtn);
+        setSelectValue();
     }
     
     todoSubmitBtn.onclick = () => {
