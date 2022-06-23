@@ -19,10 +19,10 @@ const render = (() => {
     const selectedProject = document.getElementById("projectSelect");
     const todoList = document.getElementById("todoList");
 
+    createDefaultProject();
+    toggleDisabledButton(projectTitle, projectSubmitBtn);
+    toggleDisabledButton(title, todoSubmitBtn);
 
-    const noTodos = document.createElement("h5");
-    noTodos.textContent = "No to-dos for this project yet!";
-    todoList.appendChild(noTodos);
 
     function createDefaultProject() {
         const defaultProject = project("Untitled", "", true);
@@ -30,21 +30,17 @@ const render = (() => {
         displayProject(defaultProject);
     }
 
-    createDefaultProject();
-    toggleDisabledButton(projectTitle, projectSubmitBtn);
-    toggleDisabledButton(title, todoSubmitBtn);
-
-
     function displayProject(project) {
         const projectContainer = document.createElement("div");
         const projectTitle = document.createElement("h3");
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
+
+        // If there are more projects than just the default
         if (allProjects.projectList.length > 1) {
             deselectProjects();
         }
-        project.isSelected = true;
-        addNoTodoMessage(project);
+        selectProject(project);
         toggleSelectedContainer(project, projectContainer);
         renderProjectContainer(project, projectContainer, projectTitle, projectDescription, projectSelection);
         updateTodoDiv(projectContainer, project);
@@ -63,18 +59,6 @@ const render = (() => {
         projectList.append(container);
     }
 
-    function removeNoTodoMessage(project) {
-        if (project.todoList.length > 0) {
-            noTodos.remove();
-        }
-    }
-
-    function addNoTodoMessage(project) {
-        if (project.todoList.length === 0) {
-            todoList.appendChild(noTodos);
-        }
-    }
-
     function showTodo(project) {
         for (let i = 0; i < allTodos.todoList.length; i++) {
             if ((allTodos.todoList[i]).project === project.title) {
@@ -84,11 +68,11 @@ const render = (() => {
                 const detailsBtn = document.createElement("button");
                 const deleteBtn = document.createElement("button");
                 const todoBtnContainer = document.createElement("div");
+
                 todoBtnContainer.classList.add("todoBtnContainer");
-
-
                 detailsBtn.textContent = "Details";
                 deleteBtn.textContent = "Delete";
+                deleteBtn.classList.add("deleteBtn");
                 container.classList.add("todoContainer");
                 title.textContent = todo.title;
 
@@ -111,7 +95,6 @@ const render = (() => {
                 const priorityDiv = document.createElement("div");
                 const projectDiv = document.createElement("div");
 
-
                 titleLabel.textContent = "Title: ";
                 todoTitle.textContent = todo.title;
                 dueDateLabel.textContent = "Due Date: ";
@@ -128,10 +111,9 @@ const render = (() => {
                 projectDiv.append(projectLabel, todoProject);
 
                 hideElement(todoDetails);
-                removeNoTodoMessage(project);
 
                 detailsBtn.onclick = () => {
-                    todoDetails.classList.toggle("hidden");
+                    toggleHidden(todoDetails);
                     todoDetails.append(titleDiv, dueDateDiv, priorityDiv, projectDiv);
                     container.after(todoDetails);
                    
@@ -143,7 +125,6 @@ const render = (() => {
                     allTodos.removeTodo(todo);
                     container.remove();
                     todoDetails.remove();
-                    addNoTodoMessage(project);
                 }
 
             }
@@ -156,8 +137,6 @@ const render = (() => {
             showTodo(project);
             selectProject(project);
             toggleSelectedContainer(project, container);
-            addNoTodoMessage(project);
-            removeNoTodoMessage(project);
         }
 
     }
@@ -178,8 +157,12 @@ const render = (() => {
         element.classList.add("hidden");
     }
 
-    function deselectProjects() {
+    function clearTodoList() {
         todoList.innerHTML = "";
+    }
+
+    function deselectProjects() {
+        clearTodoList();
         for (let i = 0; i < allProjects.projectList.length; i++) {
             const project = allProjects.projectList[i];
             project.isSelected = false;
@@ -221,9 +204,12 @@ const render = (() => {
         }
     }
 
+    function toggleHidden(element) {
+        element.classList.toggle("hidden");
+    }
+
     todoBtn.onclick = () => {
-        todoForm.classList.toggle("hidden");
-        hideElement(projectForm);
+        toggleHidden(todoForm);
     }
     
     todoSubmitBtn.onclick = () => {
@@ -249,8 +235,8 @@ const render = (() => {
     }
     
     projectBtn.onclick = () => {
-        projectForm.classList.toggle("hidden");
-        hideElement(todoForm);
+        toggleHidden(projectForm);
+        toggleHidden(projectBtn);
     }
 
     projectSubmitBtn.onclick = () => {
@@ -262,6 +248,8 @@ const render = (() => {
         displayProject(newProject);
         hideElement(projectForm);
         projectForm.reset();
+        toggleHidden(projectBtn);
+
     }
 
 })();

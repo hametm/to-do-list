@@ -27,16 +27,13 @@ main {
 
 #projects {
     background-color: var(--light-grey);
+    display: flex;
+    flex-direction: column;
 
 }
 
-#buttonContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    gap: 1rem;
+#projects h2 {
+    margin-left: 1rem;
 }
 
 #todos {
@@ -47,6 +44,11 @@ main {
 #todoList {
     display: flex;
     flex-direction: column;
+    padding: 1rem 1rem 0rem 1rem;
+}
+
+#todoList h5 {
+    margin-bottom: 0px;
 }
 
 h1 {
@@ -61,7 +63,6 @@ h1 {
 }
 
 .list {
-    height: 70%;
     overflow: auto;
 }
 
@@ -106,8 +107,10 @@ button:active {
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-    height: 50px;
+    align-items: center;
+    height: 30px;
     border-bottom: 1px solid var(--dark-grey);
+    margin: .5rem 1rem;
 }
 
 .todoBtnContainer {
@@ -121,13 +124,44 @@ fieldset {
 }
 
 form {
-    padding: .5rem;
-    border-bottom: var(--dark-grey);
+    padding: 1rem;
+    background-color: var(--light-grey);
+    padding: 1rem;
+    background-color: var(--light-grey);
+}
 
+.formSelector {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    margin-left: 1.5rem;
+    margin-top: 1rem;
+}
+
+.formSelector:hover {
+    cursor: pointer;
 }
 
 .formSection {
     padding: .5rem;
+}
+
+.plusBtn {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.plusBtn:hover {
+    background-color: rgb(205, 135, 191);
+}
+
+.plusBtn:active {
+    transform: none;
 }
 
 h3 {
@@ -151,6 +185,6 @@ h5 {
     border-bottom: var(--dark-grey);
 }
 
-button:focus {
-    background-color: rgb(172, 110, 160);
+.deleteBtn {
+    background-color: rgb(198, 2, 2);
 }
