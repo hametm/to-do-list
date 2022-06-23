@@ -70,9 +70,9 @@ const render = (() => {
                 const todoBtnContainer = document.createElement("div");
 
                 todoBtnContainer.classList.add("todoBtnContainer");
-                detailsBtn.textContent = "Details";
+                detailsBtn.textContent = "\u24D8";
                 detailsBtn.classList.add("detailsBtn");
-                deleteBtn.textContent = "Delete";
+                deleteBtn.textContent = "X";
                 deleteBtn.classList.add("deleteBtn");
                 container.classList.add("todoContainer");
                 title.textContent = todo.title;

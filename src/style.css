@@ -3,6 +3,7 @@
 :root {
     --light-grey: rgb(229, 229, 229);
     --dark-grey: rgb(197, 197, 197);
+    --blue: rgba(47,201,226,1);
 }
 
 body {
@@ -27,7 +28,7 @@ h1 {
     margin-left: 30px;
 }
 
-#rainbow {
+.rainbow {
     height: 10px;
     background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, 
     rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, 
@@ -59,6 +60,8 @@ main {
 
 #todos {
     background-color: white;
+    padding-left: 1rem;
+    padding-right: 1rem;
 
 }
 
@@ -70,6 +73,11 @@ main {
 
 #todoList h5 {
     margin-bottom: 0px;
+}
+
+#todoForm {
+    margin: .5rem 2rem;
+    border-radius: 8px;
 }
 
 .side {
@@ -85,7 +93,7 @@ main {
     display: none;
 }
 
-button, input[type=button] {
+input[type=button] {
     border: none;
     box-shadow: -2px 2px 5px grey;
     padding: 8px;
@@ -95,11 +103,11 @@ button, input[type=button] {
     font-size: 1rem;
 }
 
-button:hover, input[type=button]:hover {
+input[type=button]:hover {
     cursor: pointer;
 }
 
-button:active, input[type=button]:active {
+input[type=button]:active {
     transform: translate(2px, 2px);
 }
 
@@ -108,25 +116,43 @@ input[type=button]:disabled:active {
 }
 
 .detailsBtn {
-    background-color: rgba(47,201,226,1);
+    border: none;
+    background-color: var(--light-grey);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
 }
 
 .detailsBtn:hover {
-    background-color: rgb(37, 157, 176);
+    color: grey;
+    cursor: pointer;
 }
 
 .cancelBtn {
     background-color: rgba(255,0,0,1);
     margin-left: .5rem;
+    border: none;
+    box-shadow: -2px 2px 5px grey;
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1rem;
 }
 
 .cancelBtn:hover {
     background-color: rgb(177, 16, 16);
+    cursor: pointer;
 }
 
 .submitBtn {
     background-color: rgba(79,220,74,1);
-}
+    border: none;
+    box-shadow: -2px 2px 5px grey;
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1rem;}
 
 .submitBtn:disabled:hover {
     background-color: rgba(79,220,74,1);
@@ -135,6 +161,7 @@ input[type=button]:disabled:active {
 
 .submitBtn:hover {
     background-color: rgb(30, 162, 30);
+    cursor: pointer;
 }
 
 .projectContainer {
@@ -157,13 +184,14 @@ input[type=button]:disabled:active {
 
 .todoContainer {
     background-color: var(--light-grey);
-    padding: 1rem;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 30px;
     margin: .5rem 1rem;
     border-radius: 8px;
+    border-left: 8px solid var(--blue);
 }
 
 .todoBtnContainer {
@@ -193,6 +221,7 @@ input[type=text], input[type=date] {
     border: 1px solid var(--light-grey);
     height: 20px;
     margin-left: .5rem;
+    padding: 3px;
 }
 
 .formSelector {
@@ -233,20 +262,20 @@ h3 {
 
 .todoDetails {
     background-color: var(--light-grey);
-    padding: 1rem;
-    margin: -.5rem 1rem 0rem 1rem;
-    border-top: 1px solid var(--dark-grey);
     position: fixed;
     top: 50vh;
     left: 50vw;
     transform: translate(-50%, -50%);
+    height: 30%;
     width: 30%;
-    border-radius: 8px;
-    box-shadow: -2px 2px 5px grey;
     animation: .1s linear fadein;
-    background-color: rgba(47,201,226,1);
-    color: white;
+    background-color: var(--light-grey);
     font-size: 1.1rem;
+    box-shadow: -2px 2px 5px grey;
+}
+
+.todoDetails p {
+    margin-top: 0px;
 }
 
 h5 {
@@ -261,21 +290,29 @@ h5 {
 }
 
 .deleteBtn {
-    background-color: rgba(255,0,0,1);
+    background-color: var(--light-grey);
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .9rem;
 }
 
 .deleteBtn:hover {
-    background-color: rgb(177, 16, 16);
+    color: grey;
+    cursor: pointer;
 }
 
 .detailsDiv {
     display: flex;
     gap: .5rem;
+    padding-left: 1rem;
 }
 
 .cancelDiv {
     display: flex;
     justify-content: flex-end;
+    background-color: var(--blue);
+    margin-bottom: 20px;
+    padding: .5rem;
 }
 
 .todoCancelBtn {
@@ -285,10 +322,15 @@ h5 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255,0,0,1) !important;
+    background-color: var(--blue);
     font-family:Arial, Helvetica, sans-serif;
+    color: black;
+    padding: none;
+    border: none;
+    font-size: 1rem;
 }
 
 .todoCancelBtn:hover {
-    background-color: rgb(177, 16, 16) !important;
+    color: grey;
+    cursor: pointer;
 }
