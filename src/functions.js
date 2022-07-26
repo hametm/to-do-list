@@ -2,14 +2,6 @@ const todo = (title, dueDate, priority, project) => {
     return { title, dueDate, priority, project };
 }
 
-// const editTodo = (todo) => {
-
-// }
-
-// const defaultProject = (() => {
-
-// })();
-
 const project = (title, description, isSelected) => {
     let todoList = [];
     return { title, description, todoList, isSelected };

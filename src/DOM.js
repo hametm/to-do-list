@@ -1,6 +1,5 @@
 import { todo, project, editProject, allTodos, allProjects } from "./functions";
 
-
 const render = (() => {
     const projectBtn = document.getElementById("projectBtn");
     const projectForm = document.getElementById("projectForm");
@@ -23,7 +22,6 @@ const render = (() => {
 
     createDefaultProject();
 
-
     function createDefaultProject() {
         const defaultProject = project("Untitled", "", true);
         allProjects.addProject(defaultProject);
@@ -36,10 +34,7 @@ const render = (() => {
         const projectDescription = document.createElement("p");
         const projectSelection = document.createElement("option");
 
-        // If there are more projects than just the default
-        if (allProjects.projectList.length > 1) {
-            deselectProjects();
-        }
+        if (allProjects.projectList.length > 1) deselectProjects(); // If there are more projects than just the default
         selectProject(project);
         toggleSelectedContainer(project, projectContainer);
         renderProjectContainer(project, projectContainer, projectTitle, projectDescription, projectSelection);
@@ -117,12 +112,8 @@ const render = (() => {
                 cancelDiv.classList.add("cancelDiv");
 
                 titleDiv.append(titleLabel, todoTitle);
-                if (todo.dueDate) {
-                    dueDateDiv.append(dueDateLabel, dueDate);
-                }
-                if (todo.priority) {
-                    priorityDiv.append(priorityLabel, priority);
-                }
+                if (todo.dueDate) dueDateDiv.append(dueDateLabel, dueDate);
+                if (todo.priority) priorityDiv.append(priorityLabel, priority);
                 projectDiv.append(projectLabel, todoProject);
                 cancelDiv.append(cancelBtn);
 
@@ -133,7 +124,6 @@ const render = (() => {
                     todoDetails.append(cancelDiv, titleDiv, dueDateDiv, priorityDiv, projectDiv);
                     container.appendChild(todoDetails);
                 }
-
                 
                 deleteBtn.onclick = () => {
                     editProject.removeFromProject(project, todo);
@@ -145,33 +135,23 @@ const render = (() => {
                 cancelBtn.onclick = () => {
                     toggleHidden(todoDetails);
                 }
-
             }
         }
     }
     
     function updateTodoDiv(container, project) {
         container.onclick = () => {
-            // Make todoDetails disappear here
-
             deselectProjects();
             showTodo(project);
             selectProject(project);
             toggleSelectedContainer(project, container);
         }
-
     }
 
     function toggleSelectedContainer(project, container) {
-        if (project.isSelected === false) {
-            container.classList.remove("selectedContainer");
-        }
-        if (project.isSelected === true) {
-            container.classList.add("selectedContainer");
-        }
-        if (project.title === "Untitled") {
-            container.classList.add("defaultContainer");
-        }
+        if (project.isSelected === false) container.classList.remove("selectedContainer");
+        if (project.isSelected === true) container.classList.add("selectedContainer");
+        if (project.title === "Untitled") container.classList.add("defaultContainer");
     }
 
     function hideElement(element) {
@@ -204,24 +184,18 @@ const render = (() => {
     }
 
     function disableButton(title, button) {
-        if (title.value === "") {
-            button.disabled = true;
-        }
+        if (title.value === "") button.disabled = true;
     }
 
     function enableButton(title, button) {
         title.oninput = () => {
-            if (!(title.value === "")) {
-                button.disabled = false;
-            }
+            if (!(title.value === "")) button.disabled = false;
         }
     }
 
     function getPriorityValue() {
         for (let i = 0; i < priorityButtons.length; i++) {
-            if (priorityButtons[i].checked) {
-                priority = priorityButtons[i];
-            }
+            if (priorityButtons[i].checked) priority = priorityButtons[i];
         }
     }
 
@@ -232,9 +206,7 @@ const render = (() => {
     function setSelectValue() {
         for (let i = 0; i < allProjects.projectList.length; i++) {
             const project = allProjects.projectList[i];
-            if (project.isSelected === true) {
-                selectedProject.value = project.title;
-            }
+            if (project.isSelected === true) selectedProject.value = project.title;
         } 
     }
 
@@ -247,21 +219,19 @@ const render = (() => {
     
     todoSubmitBtn.onclick = () => {
         getPriorityValue();
-        const newTodo = todo(title.value, dueDate.value, priority.value, selectedProject.value); // Priority doesn't work
+        const newTodo = todo(title.value, dueDate.value, priority.value, selectedProject.value);
         allTodos.addTodo(newTodo);
-
         hideElement(todoForm);
         todoForm.reset();
         todoList.innerHTML = "";
         createTodoContainer(newTodo);
         toggleHidden(todoBtn);
-
     }
 
     function createTodoContainer(todo) {
         for (let i = 0; i < allProjects.projectList.length; i++) {
             const project = allProjects.projectList[i];
-            if (project.isSelected === true) {
+            if (project.isSelected) {
                 showTodo(project);
                 project.todoList.push(todo);
             }

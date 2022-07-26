@@ -47,7 +47,6 @@ main {
     background-color: var(--light-grey);
     display: flex;
     flex-direction: column;
-
 }
 
 .formSelector p {
@@ -63,7 +62,6 @@ main {
     background-color: white;
     padding-left: 1rem;
     padding-right: 1rem;
-
 }
 
 #todoList {
@@ -267,7 +265,7 @@ h3 {
     top: 50vh;
     left: 50vw;
     transform: translate(-50%, -50%);
-    height: 30%;
+    height: 40%;
     width: 30%;
     animation: .1s linear fadein;
     background-color: var(--light-grey);
